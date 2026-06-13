@@ -1,0 +1,59 @@
+#INPUT
+Get a, b, f_x, method from user
+
+IF a contains "pi"
+    Replace "pi" with the value of π
+    Convert expression to numeric value
+ELSE
+    a <- FLOAT(a)
+ENDIF
+
+IF b contains "pi"
+    Replace "pi" with the value of π
+    Convert expression to numeric value
+ELSE
+    b <- FLOAT(b)
+ENDIF
+
+n <- 1000
+area <- 0
+shift <- 0
+constant <- 0
+
+#PROCESS
+h <- (b - a) / n
+
+IF method = "RRM"
+    shift <- 1
+
+ELSE IF method = "MPM"
+    constant <- h / 2
+
+ENDIF
+
+FOR i IN RANGE (0 + shift, n + shift) DO
+
+    IF method = "TRP"
+
+        x_left <- a + i * h
+        x_right <- x_left + h
+
+        height_left <- Evaluate f_x at x_left
+        height_right <- Evaluate f_x at x_right
+
+        area <- area + ((height_left + height_right) / 2) * h
+
+    ELSE
+
+        xi <- a + i * h + constant
+
+        height <- Evaluate f_x at xi
+
+        area <- area + height * h
+
+    ENDIF
+
+END FOR
+
+#OUTPUT
+DISPLAY "The integration of " + f_x + " is " + area

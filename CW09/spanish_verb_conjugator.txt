@@ -1,0 +1,26 @@
+# INPUT
+Display "Write a spanish verb (ar/er/ir): "
+verb ← user input
+
+# PROCESS
+length ← length of verb
+stem ← letters of verb from position 1 to length - 2
+ending ← last two letters of verb
+
+Initialize array pronouns with ["Yo", "Tu", "El", "Nosotros", "Vosotros", "Ellos"]
+Initialize array conjugations of size 6
+
+If ending is "ar" then
+    conjugations ← ["o", "as", "a", "amos", "ais", "an"]
+Else If ending is "er" then
+    conjugations ← ["o", "es", "e", "emos", "eis", "en"]
+Else If ending is "ir" then
+    conjugations ← ["o", "es", "e", "imos", "is", "en"]
+End If
+
+# OUTPUT
+For index ← 1 to 6
+    current_pronoun ← pronouns[index]
+    termination ← conjugations[index]
+    Display current_pronoun + " " + stem + termination
+End For

@@ -1,0 +1,118 @@
+# INPUT
+Get username from user
+Get password from user
+
+WHILE username is not in users OR users[username]['password'] ≠ password DO:
+    Display "Invalid credentials. Please try again."
+    Get username from user
+    Get password from user
+END WHILE
+
+role ← users[username]['rol']
+name ← users[username]['name']
+Display "Bienvenido!, " + name + " (" + role + ")"
+
+
+# PROCESS
+IF role == "student" THEN:
+    Display "School Report"
+    Display "---"
+    approved ← EMPTY SET
+    
+    FOR EACH subject IN subjects DO:
+        IF notes[username][subject] ≥ 8.0 THEN:
+            ADD subject TO approved
+        END IF
+    END FOR
+    
+    pending ← subjects - approved
+    
+    FOR EACH subject IN subjects DO:
+        IF subject IN approved THEN:
+            grade ← notes[username][subject]
+            Display subject + ": " + grade
+        END IF
+    END FOR
+
+ELSE IF role == "professor" THEN:
+    INFINITE LOOP DO:
+        Display "Students"
+        FOR EACH user IN users DO:
+            IF users[user]['rol'] == "student" THEN:
+                Display "User: " + user + " | Student: " + users[user]['name']
+            END IF
+        END FOR
+        
+        Get student from user
+        
+        IF student == "" THEN:
+            EXIT LOOP (break)
+        END IF
+        
+        IF student IN notes THEN:
+            Display "Subjects"
+            FOR EACH subject IN subjects DO:
+                Display subject
+            END FOR
+            
+            Get subject from user
+            
+            IF subject IN subjects THEN:
+                current_grade ← notes[student][subject]
+                Get new_grade from user
+                Get confirmation ("yes"/"no") from user
+                
+                Display subject + ": " + current_grade + " ==> " + new_grade
+                
+                IF confirmation.lower() == "yes" THEN:
+                    notes[student][subject] ← new_grade
+                    Display "Grade updated!"
+                    Display notes[student]
+                ELSE:
+                    Display "Write other thing to exit"
+                END IF
+            ELSE:
+                Display "Invalid subject."
+            END IF
+        ELSE:
+            Display "Invalid student username."
+        END IF
+    END LOOP
+
+ELSE IF role == "coordinator" THEN:
+    Display "Professors"
+    FOR EACH user IN users DO:
+        IF users[user]['rol'] == "professor" THEN:
+            Display "User: " + user + " | Professor: " + users[user]['name']
+        END IF
+    END FOR
+    
+    Display "Students"
+    FOR EACH user IN users DO:
+        IF users[user]['rol'] == "student" THEN:
+            Display "User: " + user + " | Student: " + users[user]['name']
+        END IF
+    END FOR
+    
+    Display "Records"
+    header ← "    SUBJECTS    | "
+    FOR EACH student IN notes DO:
+        header ← header + student + "    | "
+    END FOR
+    Display header
+    Display "---"
+    
+    FOR EACH subject IN subjects DO:
+        display_subject ← truncate subject to 16 characters
+        row ← display_subject + "    | "
+        FOR EACH student IN notes DO:
+            grade ← notes[student][subject]
+            row ← row + grade + "    | "
+        END FOR
+        Display row
+    END FOR
+END IF
+
+
+# OUTPUT
+Display "Goodbye!"

@@ -1,0 +1,50 @@
+# IMPORT Image library from PIL
+IMPORT Image FROM PIL
+
+# INPUT: Read configuration and the CSV data file
+INITIALIZE config AS empty dictionary
+
+OPEN "config.txt" FOR READING
+FOR EACH line IN file DO
+    parameter, value <- SPLIT line BY "="
+    # Convert to number (float or int) accordingly
+    config[parameter] <- CONVERT TO FLOAT OR INT(value)
+END FOR
+CLOSE file
+
+OPEN "mandelbrot.csv" FOR READING
+lines <- READ ALL LINES FROM file
+CLOSE file
+
+# CLEANUP: Remove the header "row,column,iterations"
+REMOVE FIRST POSITION OF lines
+
+# Initialize image variables
+max_iter <- config["max_iter"]
+width <- config["ancho"]
+height <- config["alto"]
+
+# PROCESS: Create canvas and paint pixels
+CREATE NEW image (MODE "HSV", size width x height)
+
+FOR EACH line IN lines DO
+    # Unpack the CSV values
+    row, column, iterations <- SPLIT line BY ","
+    
+    # Calculate brightness based on how fast the point "escaped"
+    IF iterations == max_iter THEN
+        brightness <- 40
+    ELSE
+        # Normalize the color between 0 and 255
+        brightness <- INTEGER((iterations / max_iter) * 255)
+    END IF
+    
+    # Place the pixel on the image (using x=column, y=row)
+    SET_PIXEL ON image (column, row) WITH COLOR (brightness, 255, 255)
+END FOR
+
+# OUTPUT: Save the final result
+CONVERT image TO "RGB"
+SAVE image AS "mandelbrot.png"
+
+DISPLAY "DONE"

@@ -1,10 +1,15 @@
-Classwork-12-The-Mandelbrot-Set
+# Classwork 14 – Error Handling
 
+This folder contains the solutions for **Classwork 14 – Error Handling** of the Programming course.
 
-That folder must contain the following three files:
+The purpose of this assignment is to continue practicing error handling in Python while maintaining a clear program structure using the **# INPUT**, **# PROCESS**, and **# OUTPUT** sections.
 
-PPP.txt — your complete pseudocode following class rules: plain English, ← for assignment, # for comments, no Python syntax.
+## Contents
 
-Flowchart.png — your flowchart exported as an image, covering the iteration flow for each method and the decision flow for the three modes.
+This project includes the following Python programs:
 
-mandelbrot_set_vis.py — your working Python program with # INPUT, # PROCESS, and # OUTPUT comments.
+- **Classwork #10 – School Management System**
+- **Classwork #11 – The Mandelbrot Set**
+- **Classwork #12 – The Mandelbrot Set**
+
+Each program is fully functional, organized with the required comments, and demonstrates the use of exception handling to improve reliability and user experience.

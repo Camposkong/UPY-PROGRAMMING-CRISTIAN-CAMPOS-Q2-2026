@@ -1,0 +1,38 @@
+#INPUT
+Get algorithm_choice from the user    #Int e.g. 1=Bubble, 2=Selection, 3=Insertion
+
+#PROCESS
+numbers ← [random.randint(0,100) for x in range(10)]    #List of integers e.g. [45, 12, 89...]
+n ← length of numbers    #Int
+
+If algorithm_choice == 1:    #This executes Bubble Sort
+    For sweep from 0 to n-1:
+        For pair from 0 to n-2-sweep:
+            DrawBars(numbers, pair, pair+1)    #Update visual canvas
+            If numbers[pair] > numbers[pair + 1]:
+                numbers[pair], numbers[pair + 1] ← numbers[pair+1], numbers[pair]    #Swap
+                DrawBars(numbers, pair, pair+1)
+
+Else If algorithm_choice == 2:    #This executes Selection Sort
+    For i from 0 to n-1:
+        min_idx ← i
+        For j from i+1 to n-1:
+            DrawBars(numbers, min_idx, j)
+            If numbers[j] < numbers[min_idx]:
+                min_idx ← j
+        If min_idx != i:
+            numbers[i], numbers[min_idx] ← numbers[min_idx], numbers[i]    #Swap
+            DrawBars(numbers, i, min_idx)
+
+Else If algorithm_choice == 3:    #This executes Insertion Sort
+    For i from 1 to n-1:
+        j ← i
+        While j > 0 and numbers[j - 1] > numbers[j]:
+            DrawBars(numbers, j, j-1)
+            numbers[j], numbers[j - 1] ← numbers[j - 1], numbers[j]    #Swap
+            DrawBars(numbers, j, j-1)
+            j ← j - 1
+
+#OUTPUT
+Display "Sorting process finished for option: " + algorithm_choice
+Display "Final sorted numbers: " + numbers
